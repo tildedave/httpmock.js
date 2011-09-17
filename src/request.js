@@ -10,8 +10,25 @@ var uri = function (regexp) {
   return obj;
 };
 
-var request = {
-  uri : uri
+var request = function (args) {
+
+  var argArray = Array.prototype.slice.call(arguments);
+  return {
+    matches : function (req) {
+      for(var i = 0; i < argArray.length; ++i) {
+        var arg = argArray[i];
+        if (!arg.matches(req)) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+  };
 };
 
-module.exports = request;
+
+module.exports = {
+  uri : uri,
+  request : request
+};
