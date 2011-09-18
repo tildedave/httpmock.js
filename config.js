@@ -13,8 +13,4 @@ routes(
   route("Can update a kitten",
         request(uri("kittens/([0-9]+)"),
                 method.PUT),
-        response(status(422))),
-  route("Person XML",
-        request(uri("/person/[0-9]+"),
-                method.GET),
-        response(xml-file("person.xml"))));
+        response(status(422))));
