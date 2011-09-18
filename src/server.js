@@ -1,3 +1,9 @@
+var argv = require('optimist')
+  .usage("Usage: $0 -config [config] -port [port]")
+  .demand(['config'])
+  .default('port', 5000)
+  .argv;
+
 var mock = require('./mock.js').mock;
 
-mock(5000, "../testconfig.js");
+mock(argv.port, argv.config);
