@@ -4,8 +4,8 @@ var route = function (desc, request, response) {
       return request.matches(req);
     },
     
-    handle : function (resp) {
-      response.handle(resp);
+    handle : function (req, resp) {
+      response.handle(req, resp);
     }
   };
 };
@@ -17,8 +17,12 @@ var routes = function (args) {
       for(var i = 0, l = argArray.length; i < l; ++i) {
         if (argArray[i].matches(req)) {
           argArray[i].handle(req, res);
+          return;
         }
       }
+
+      res.writeHead(404);
+      res.end();
     }
   };
 };

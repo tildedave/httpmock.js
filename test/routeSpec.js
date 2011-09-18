@@ -35,6 +35,18 @@ describe("Route", function () {
 
     return mockRequest;
   };
+
+  var getTestResponse = function () {
+    var testResponse = {
+      writeHead : function () {},
+      end : function () {}
+    };
+
+    spyOn(testResponse, "writeHead");
+    spyOn(testResponse, "end");
+
+    return testResponse;
+  };
   
   it("determines if a request matches a route", function () {
     var mockResponse = getMockResponse();
@@ -53,11 +65,12 @@ describe("Route", function () {
     var mockResponse = getMockResponse();
     var mockRequest = getMockRequest();    
     var testRequest = {};
+    var testResponse = getTestResponse();
 
     var testRoute = route("Test route", mockRequest, mockResponse);
-    testRoute.handle(testRequest);
+    testRoute.handle(testRequest, testResponse);
 
-    expect(mockResponse.handle).toHaveBeenCalledWith(testRequest);
+    expect(mockResponse.handle).toHaveBeenCalledWith(testRequest, testResponse);
   });
 
   it("handles one route", function  () {
@@ -69,10 +82,10 @@ describe("Route", function () {
                                   mockResponse));
 
     var testRequest = {};
-    var testResponse = {};
+    var testResponse = getTestResponse();
     testRoutes.process(testRequest, testResponse);
 
-    expect(mockResponse.handle).toHaveBeenCalledWith(testResponse);
+    expect(mockResponse.handle).toHaveBeenCalledWith(testRequest, testResponse);
   });
   
   it("matches the correct route", function () {
@@ -88,9 +101,25 @@ describe("Route", function () {
                                   mockResponse));
 
     var testRequest = {};
-    var testResponse = {};
+    var testResponse = getTestResponse();
     testRoutes.process(testRequest, testResponse);
 
-    expect(mockResponse.handle).toHaveBeenCalledWith(testResponse);
+    expect(mockResponse.handle).toHaveBeenCalledWith(testRequest, testResponse);
+  });
+
+  it("gives a 404 with no matcher", function () {
+    var failedRequest = getFailedMockRequest();
+
+    var testRoutes = routes(route("Won't match ever",
+                                  failedRequest,
+                                  getMockResponse()));
+
+    
+    var testRequest = {};
+    var testResponse = getTestResponse();
+    
+    testRoutes.process(testRequest, testResponse);
+
+    expect(testResponse.writeHead).toHaveBeenCalledWith(404);    
   });
 });
