@@ -6,11 +6,12 @@ var http = require('http');
  */
 
 var uri = require('./request.js').uri;
-var request = require('./request.js').uri;
+var request = require('./request.js').request;
 var method = require('./request.js').method;
 
 var response = require('./response.js').response;
 var text = require('./response.js').text;
+var json = require('./response.js').json;
 var status = require('./response.js').status;
 
 var route = require('./route.js').route;
