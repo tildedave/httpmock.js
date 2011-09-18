@@ -7,6 +7,7 @@ var http = require('http');
 
 var uri = require('./request.js').uri;
 var request = require('./request.js').uri;
+var method = require('./request.js').method;
 
 var response = require('./response.js').response;
 var text = require('./response.js').text;

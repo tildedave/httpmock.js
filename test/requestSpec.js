@@ -1,6 +1,7 @@
 var req = require('../src/request.js');
 var uri = req.uri;
 var request = req.request;
+var method = req.method;
 
 describe("Request", function () {
 
@@ -54,5 +55,35 @@ describe("Request", function () {
                    uri("/bulbasaur/40"))
            .matches(testRequest))
       .toBe(false);
+  });
+  
+  it("matches a method", function () {
+    var testRequest = {
+      method : "GET"
+    };
+
+    expect(request(method.GET)
+           .matches(testRequest))
+      .toBe(true);
+  });
+
+  it("fails to match a method", function () {
+    var testRequest = {
+      method : "POST"
+    };
+
+    expect(request(method.GET)
+           .matches(testRequest))
+      .toBe(false);
+  });
+
+  it("matches the post method", function () {
+    var testRequest = {
+      method : "POST"
+    };
+
+    expect(request(method.POST)
+           .matches(testRequest))
+      .toBe(true);
   });
 });

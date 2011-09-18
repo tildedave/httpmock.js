@@ -10,6 +10,22 @@ var uri = function (regexp) {
   return obj;
 };
 
+var methodMatcher = function (method) {
+  return {
+      matches : function (req) {
+        return req.method === method;
+      }
+  };
+};
+
+var method = {
+  GET : methodMatcher("GET"),
+  POST : methodMatcher("POST"),  
+  DELETE : methodMatcher("DELETE"),  
+  PUT : methodMatcher("PUT"),  
+  HEAD : methodMatcher("HEAD")
+};
+
 var request = function (args) {
   var argArray = Array.prototype.slice.call(arguments);
   return {
@@ -28,5 +44,6 @@ var request = function (args) {
 
 module.exports = {
   uri : uri,
-  request : request
+  request : request,
+  method : method
 };
