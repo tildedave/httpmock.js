@@ -27,7 +27,6 @@ var request = function (args) {
   };
 };
 
-
 module.exports = {
   uri : uri,
   request : request
