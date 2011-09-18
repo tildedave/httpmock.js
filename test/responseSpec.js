@@ -62,4 +62,11 @@ describe("Response", function () {
     expect(testResponse.write)
       .toHaveBeenCalledWith('{ "success" : true }');
   });
+
+  it("calls end", function () {
+    var testResponse = mockResponse();
+    response(text('should call end')).handle(mockRequest(), testResponse);
+    expect(testResponse.end)
+      .toHaveBeenCalled();
+  });
 });

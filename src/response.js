@@ -25,10 +25,12 @@ var response = function (args) {
   var argArray = Array.prototype.slice.call(arguments);
   
   return {
-      handle : function (req, resp) {
+      handle : function (req, res) {
         for(var i = 0, l = argArray.length; i < l; ++i) {
-          argArray[i].handle(req, resp);
+          argArray[i].handle(req, res);
         }
+
+        res.end();
       }
   };
 };
