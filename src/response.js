@@ -21,6 +21,14 @@ var json = function (jsonToWrite) {
   };
 };
 
+var status = function (statusCode) {
+  return {
+    handle : function (req, res) {
+      res.statusCode = statusCode;
+    }
+  };
+}
+
 var response = function (args) {
   var argArray = Array.prototype.slice.call(arguments);
   
@@ -38,5 +46,6 @@ var response = function (args) {
 module.exports = {
   text : text,
   json : json,
-  response : response
+  response : response,
+  status : status
 };

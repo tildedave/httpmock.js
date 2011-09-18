@@ -1,6 +1,7 @@
 var res = require("../src/response.js");
 var response = res.response;
 var json = res.json;
+var status = res.status;
 var text = res.text;
 
 describe("Response", function () {
@@ -47,6 +48,14 @@ describe("Response", function () {
     expect(testResponse.statusCode).toEqual(200);
   });
 
+
+  it("handles with a status code", function () {
+    var testResponse = mockResponse();
+    response(status(422)).handle(mockRequest(), testResponse);
+    
+    expect(testResponse.statusCode).toEqual(422);
+  });
+  
   it("writes text", function () {
     var testResponse = mockResponse();
     response(text("pete campbell")).handle(mockRequest(), testResponse);
