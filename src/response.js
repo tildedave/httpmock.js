@@ -15,7 +15,7 @@ var json = function (jsonToWrite) {
       resp.statusCode = 200;
       resp.write(jsonToWrite);
     }
-  }
+  };
 };
 
 var response = function (args) {
