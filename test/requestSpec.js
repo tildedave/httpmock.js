@@ -1,5 +1,3 @@
-var http = require('http');
-
 var req = require('../src/request.js');
 var uri = req.uri;
 var request = req.request;
