@@ -120,6 +120,7 @@ describe("Route", function () {
     
     testRoutes.process(testRequest, testResponse);
 
-    expect(testResponse.writeHead).toHaveBeenCalledWith(404);    
+    expect(testResponse.writeHead).toHaveBeenCalledWith(404);
+    expect(testResponse.end).toHaveBeenCalled();
   });
 });
