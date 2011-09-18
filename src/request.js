@@ -11,7 +11,6 @@ var uri = function (regexp) {
 };
 
 var request = function (args) {
-
   var argArray = Array.prototype.slice.call(arguments);
   return {
     matches : function (req) {

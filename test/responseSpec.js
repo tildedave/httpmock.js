@@ -5,6 +5,10 @@ var text = res.text;
 
 describe("Response", function () {
 
+  var mockRequest = function () {
+      return {};
+  };
+  
   var mockResponse = function () {
     var testResponse = {
       setHeader : function () { },
@@ -21,7 +25,7 @@ describe("Response", function () {
   
   it("handles with text", function () {
     var testResponse = mockResponse();
-    text("Hello there!").handle(testResponse);
+    text("Hello there!").handle(mockRequest(), testResponse);
 
     expect(testResponse.setHeader)
       .toHaveBeenCalledWith("Content-Type", "text/plain");
@@ -29,7 +33,7 @@ describe("Response", function () {
 
   it("handles with a text response", function () {
     var testResponse = mockResponse();
-    response(text("Hello there!")).handle(testResponse);
+    response(text("Hello there!")).handle(mockRequest(), testResponse);
 
     expect(testResponse.setHeader)
       .toHaveBeenCalledWith("Content-Type", "text/plain");
@@ -37,21 +41,22 @@ describe("Response", function () {
 
   it("sets the status code", function () {
     var testResponse = mockResponse();
-    response(text("text gives a status code of 200")).handle(testResponse);
+    response(text("text gives a status code of 200"))
+      .handle(mockRequest(), testResponse);
 
     expect(testResponse.statusCode).toEqual(200);
   });
 
   it("writes text", function () {
     var testResponse = mockResponse();
-    response(text("pete campbell")).handle(testResponse);
+    response(text("pete campbell")).handle(mockRequest(), testResponse);
 
     expect(testResponse.write).toHaveBeenCalledWith("pete campbell");
   });
 
   it("writes json", function () {
     var testResponse = mockResponse();
-    response(json('{ "success" : true }')).handle(testResponse);
+    response(json('{ "success" : true }')).handle(mockRequest(), testResponse);
     expect(testResponse.setHeader)
       .toHaveBeenCalledWith("Content-Type", "application/json");
     expect(testResponse.write)

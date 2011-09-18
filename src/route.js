@@ -10,8 +10,17 @@ var route = function (desc, request, response) {
   };
 };
 
-var routes = function () {
-    
+var routes = function (args) {
+  var argArray = Array.prototype.slice.call(arguments);
+  return {
+    process: function (req, res) {
+      for(var i = 0, l = argArray.length; i < l; ++i) {
+        if (argArray[i].matches(req)) {
+          argArray[i].handle(req, res);
+        }
+      }
+    }
+  };
 };
 
 module.exports = {
