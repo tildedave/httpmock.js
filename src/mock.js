@@ -11,6 +11,7 @@ var method = require('./request.js').method;
 
 var response = require('./response.js').response;
 var text = require('./response.js').text;
+var status = require('./response.js').status;
 
 var route = require('./route.js').route;
 var routes = require('./route.js').routes;
