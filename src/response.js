@@ -1,9 +1,13 @@
+var writeSuccess = function (resp, data) {
+  resp.statusCode = 200;
+  resp.write(data);
+};
+
 var text = function (textToWrite) {
   return {
     handle: function (resp) {
       resp.setHeader("Content-Type", "text/plain");
-      resp.statusCode = 200;
-      resp.write(textToWrite);
+      writeSuccess(resp, textToWrite);
     }
   };
 };
@@ -12,8 +16,7 @@ var json = function (jsonToWrite) {
   return {
     handle: function (resp) {
       resp.setHeader("Content-Type", "application/json");
-      resp.statusCode = 200;
-      resp.write(jsonToWrite);
+      writeSuccess(resp, jsonToWrite);
     }
   };
 };
