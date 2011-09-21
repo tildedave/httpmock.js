@@ -32,9 +32,9 @@ then start the server:
       route("Can check a kitten's async status",
             request(uri("kittenjobs/([0-9]+)"),
                    method.GET),
-            response(time(1, json('{ "done" : false }')),
-                     time(2, json('{ "done" : false }')),
-                     otherwise(json('{ "done" : true}')))));
+            response(time(1, json({ done : false })),
+                     time(2, json({ done : false })),
+                     otherwise(json({ done : true})))));
 
 Requirements
 ------------
