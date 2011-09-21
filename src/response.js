@@ -33,23 +33,21 @@ var time = function (timeCalled, responseHandler) {
   return {
     timeCalled : 0,
     
-    handle : function(req, resp) {
+    handle : function(req, resp, responseState) {
       ++this.timeCalled;
       
       if (this.timeCalled === timeCalled) {
         responseHandler.handle(req, resp);
-        return true;
+        responseState.conditionalResponse = true;
       }
-
-      return false;
     }
   };
 };
 
 var otherwise = function (responseHandler) {
   return {
-      handle : function(req, res, condResponse) {
-        if (!condResponse) {
+      handle : function(req, res, responseState) {
+        if (!responseState.conditionalResponse) {
           responseHandler.handle(req, res);
         }
       }
@@ -60,12 +58,11 @@ var response = function (args) {
   var argArray = Array.prototype.slice.call(arguments);
   return {
       handle : function (req, res) {
-        var hadCondResponse = false;
+        var responseState = {
+          conditionalResponse : false
+        };
         for(var i = 0, l = argArray.length; i < l; ++i) {
-          var condResponse = argArray[i].handle(req, res, hadCondResponse);
-          if(condResponse === true) {
-            hadCondResponse = true;
-          }
+          argArray[i].handle(req, res, responseState);
         }
 
         res.end();
