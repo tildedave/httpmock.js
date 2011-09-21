@@ -27,15 +27,45 @@ var status = function (statusCode) {
       res.statusCode = statusCode;
     }
   };
-}
+};
+
+var time = function (timeCalled, responseHandler) {
+  return {
+    timeCalled : 0,
+    
+    handle : function(req, resp) {
+      ++this.timeCalled;
+      
+      if (this.timeCalled === timeCalled) {
+        responseHandler.handle(req, resp);
+        return true;
+      }
+
+      return false;
+    }
+  };
+};
+
+var otherwise = function (responseHandler) {
+  return {
+      handle : function(req, res, condResponse) {
+        if (!condResponse) {
+          responseHandler.handle(req, res);
+        }
+      }
+  };
+};
 
 var response = function (args) {
   var argArray = Array.prototype.slice.call(arguments);
-  
   return {
       handle : function (req, res) {
+        var hadCondResponse = false;
         for(var i = 0, l = argArray.length; i < l; ++i) {
-          argArray[i].handle(req, res);
+          var condResponse = argArray[i].handle(req, res, hadCondResponse);
+          if(condResponse === true) {
+            hadCondResponse = true;
+          }
         }
 
         res.end();
@@ -47,5 +77,7 @@ module.exports = {
   text : text,
   json : json,
   response : response,
-  status : status
+  status : status,
+  time : time,
+  otherwise : otherwise
 };

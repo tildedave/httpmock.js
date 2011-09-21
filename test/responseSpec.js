@@ -3,6 +3,8 @@ var response = res.response;
 var json = res.json;
 var status = res.status;
 var text = res.text;
+var time = res.time;
+var otherwise = res.otherwise;
 
 describe("Response", function () {
 
@@ -77,5 +79,44 @@ describe("Response", function () {
     response(text('should call end')).handle(mockRequest(), testResponse);
     expect(testResponse.end)
       .toHaveBeenCalled();
+  });
+
+  it("writes different results the first and second time", function () {
+    var testResponse1 = mockResponse();
+    var testResponse2 = mockResponse();
+    var r = response(time(1, text('Kittens')),
+                     time(2, text('Puppies')));
+
+    r.handle(mockRequest(), testResponse1);
+    r.handle(mockRequest(), testResponse2);
+
+    expect(testResponse1.write).toHaveBeenCalledWith('Kittens');
+    expect(testResponse1.write).wasNotCalledWith('Puppies');
+    
+    expect(testResponse2.write).wasNotCalledWith('Kittens');
+    expect(testResponse2.write).toHaveBeenCalledWith('Puppies');
+  });
+
+  it("does not write a default if time matches", function () {
+    var testResponse = mockResponse();
+    var r = response(time(1, text('Charmander')),
+                     otherwise(text('Abra')));
+
+    r.handle(mockRequest(), testResponse);
+    
+    expect(testResponse.write).wasNotCalledWith('Abra');
+  });
+  
+  it("writes a default if a time does not match", function () {
+    var testResponse = mockResponse();
+    
+    var r = response(time(1, text('Pikachu')),
+                     otherwise(text('Bulbasaur')));
+
+    r.handle(mockRequest(), mockResponse());
+    r.handle(mockRequest(), testResponse);
+
+    expect(testResponse.write).toHaveBeenCalledWith('Bulbasaur');
+    expect(testResponse.write).wasNotCalledWith('Pikachu');
   });
 });

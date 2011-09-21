@@ -13,6 +13,9 @@ var response = require('./response.js').response;
 var text = require('./response.js').text;
 var json = require('./response.js').json;
 var status = require('./response.js').status;
+var time = require('./response.js').time;
+var otherwise = require('./response.js').otherwise;
+
 
 var route = require('./route.js').route;
 var routes = require('./route.js').routes;
