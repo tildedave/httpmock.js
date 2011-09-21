@@ -65,7 +65,7 @@ describe("Response", function () {
     expect(testResponse.write).toHaveBeenCalledWith("pete campbell");
   });
 
-  it("writes json", function () {
+  it("writes an object as json", function () {
     var testResponse = mockResponse();
     var jsonObject = { success : true };
     response(json(jsonObject)).handle(mockRequest(), testResponse);
@@ -75,6 +75,15 @@ describe("Response", function () {
       .toHaveBeenCalledWith(JSON.stringify(jsonObject));
   });
 
+  it("writes a string as json", function () {
+    var testResponse = mockResponse();
+    response(json('{"success" : true}')).handle(mockRequest(), testResponse);
+    expect(testResponse.setHeader)
+      .toHaveBeenCalledWith("Content-Type", "application/json");
+    expect(testResponse.write)
+      .toHaveBeenCalledWith('{"success" : true}');
+  });
+  
   it("calls end", function () {
     var testResponse = mockResponse();
     response(text('should call end')).handle(mockRequest(), testResponse);

@@ -16,7 +16,13 @@ var json = function (jsonToWrite) {
   return {
     handle: function (req, resp) {
       resp.setHeader("Content-Type", "application/json");
-      writeSuccess(resp, JSON.stringify(jsonToWrite));
+      var toWrite;
+      if (typeof(jsonToWrite) === 'object') {
+        writeSuccess(resp, JSON.stringify(jsonToWrite));
+      }
+      else {
+        writeSuccess(resp, jsonToWrite);
+      }
     }
   };
 };
