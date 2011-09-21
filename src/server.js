@@ -1,5 +1,5 @@
 var argv = require('optimist')
-  .usage("Usage: $0 -config [config] -port [port]")
+  .usage("Usage: $0 --config [config] --port [port]")
   .demand(['config'])
   .default('port', 5000)
   .argv;
