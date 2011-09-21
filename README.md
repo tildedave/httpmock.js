@@ -1,9 +1,9 @@
-restmock-node 
+httpmock.js
 =============
 
 Node port of Restmock (https://github.com/tildedave/restmock).
 
-Restmock is an HTTP server that serves mostly static content.  Its
+HTTPMock is a  server that serves mostly static content.  Its
 configuration is specified by an external file in a DSL.
 
 Usage
@@ -12,7 +12,7 @@ Usage
 Specify the server's behavior in a configuration file (config.js) and 
 then start the server:
 
-    node restmock.js --config config.js
+    node httpmock.js --config config.js
 
 ### Example config.js
 
@@ -84,6 +84,6 @@ accept header.
 Requirements
 ------------
 
-Restmock-node uses optimist to parse command-line arguments.
+httpmock.js depends on optimist for parsing command-line arguments.
 
     npm install optimist
