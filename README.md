@@ -67,16 +67,16 @@ accept header.
             return false;
           }
 
-          return accept.indexOf("acceptsType") != -1;
+          return accept.indexOf(acceptsType) != -1;
         }
-      }
+      };
     }
 
     routes(
       route("JSON data", 
         request(uri("/data"),
                 accepts("application/json")),
-        reponse(json({ success: true }))),
+        response(json({ success: true }))),
       route("XML data",
         request(uri("/data")),
         response(text("succeeded!"))));
