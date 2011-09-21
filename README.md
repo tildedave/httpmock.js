@@ -1,10 +1,12 @@
 httpmock.js
 =============
 
-Node port of Restmock (https://github.com/tildedave/restmock).
-
-HTTPMock is a  server that serves mostly static content.  Its
+httpmock.js is a  server that serves mostly static content.  Its
 configuration is specified by an external file in a DSL.
+
+The goal is to allow easy specification of mock servers for client testing.
+
+It began as a node.js port of restmock (https://github.com/tildedave/restmock).
 
 Usage
 -----
