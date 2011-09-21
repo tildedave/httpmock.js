@@ -13,4 +13,11 @@ routes(
   route("Can update a kitten",
         request(uri("kittens/([0-9]+)"),
                 method.PUT),
-        response(status(422))));
+        response(status(422))),
+  route("Can check a kitten's async status",
+       request(uri("kittenjobs/([0-9]+)"),
+               method.GET),
+        response(time(1, json('{ "done" : false }')),
+                 time(2, json('{ "done" : false }')),
+                 otherwise(json('{ "done" : true}'))))
+);
