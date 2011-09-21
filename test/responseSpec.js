@@ -67,11 +67,12 @@ describe("Response", function () {
 
   it("writes json", function () {
     var testResponse = mockResponse();
-    response(json('{ "success" : true }')).handle(mockRequest(), testResponse);
+    var jsonObject = { success : true };
+    response(json(jsonObject)).handle(mockRequest(), testResponse);
     expect(testResponse.setHeader)
       .toHaveBeenCalledWith("Content-Type", "application/json");
     expect(testResponse.write)
-      .toHaveBeenCalledWith('{ "success" : true }');
+      .toHaveBeenCalledWith(JSON.stringify(jsonObject));
   });
 
   it("calls end", function () {

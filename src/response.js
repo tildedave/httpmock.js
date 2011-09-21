@@ -16,7 +16,7 @@ var json = function (jsonToWrite) {
   return {
     handle: function (req, resp) {
       resp.setHeader("Content-Type", "application/json");
-      writeSuccess(resp, jsonToWrite);
+      writeSuccess(resp, JSON.stringify(jsonToWrite));
     }
   };
 };
