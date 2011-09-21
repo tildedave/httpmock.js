@@ -1,4 +1,4 @@
-var writeSuccess = function (resp, data) {
+function writeSuccess(resp, data) {
   resp.statusCode = 200;
   resp.write(data);
 };
