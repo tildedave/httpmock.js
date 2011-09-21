@@ -3,13 +3,16 @@ restmock-node
 
 Node port of Restmock (https://github.com/tildedave/restmock).
 
+Restmock is an HTTP server that serves mostly static content.  Its
+configuration is specified by an external file in a DSL.
+
 Usage
 -----
 
 Specify the server's behavior in a configuration file (config.js) and 
 then start the server:
 
-   node src/server.js --config config.js
+    node restmock.js --config config.js
 
 ### Example config.js
 
@@ -34,7 +37,49 @@ then start the server:
                    method.GET),
             response(time(1, json({ done : false })),
                      time(2, json({ done : false })),
-                     otherwise(json({ done : true})))));
+                     otherwise(json({ done : true})))))
+
+Customizing the Server
+----------------------
+
+Because the server configuration is JavaScript, it is possible to
+script dynamic behavior into an otherwise static server.
+
+Matchers
+--------
+
+Functions inside a `request` determine if an incoming HTTP request
+matches the given route.  
+
+Some built-in matchers are `uri` and `method`.  
+
+Custom matcher objects should have a function `matches` that returns
+`true` or `false`.  
+
+Here is an example of a custom matcher that will match a request's 
+accept header.
+
+    var accepts = function(acceptsType) {
+      return {
+        matches : function (req) {
+          var accept = req.headers.accept;
+          if (!accept) {
+            return false;
+          }
+
+          return accept.indexOf("acceptsType") != -1;
+        }
+      }
+    }
+
+    routes(
+      route("JSON data", 
+        request(uri("/data"),
+                accepts("application/json")),
+        reponse(json({ success: true }))),
+      route("XML data",
+        request(uri("/data")),
+        response(text("succeeded!"))));
 
 Requirements
 ------------
