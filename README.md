@@ -77,7 +77,7 @@ accept header.
         request(uri("/data"),
                 accepts("application/json")),
         response(json({ success: true }))),
-      route("XML data",
+      route("other kinds of data",
         request(uri("/data")),
         response(text("succeeded!"))));
 
