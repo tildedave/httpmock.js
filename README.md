@@ -8,6 +8,17 @@ The goal is to allow easy specification of mock servers for client testing.
 
 It began as a node.js port of restmock (https://github.com/tildedave/restmock).
 
+Installing
+----------
+
+Install with npm:
+
+    npm install https://github.com/tildedave/httpmock.js/tarball/0.0.1
+
+Run with node:
+
+    node ./node_modules/httpmock/httpmock.js --config mock.js
+
 Usage
 -----
 
