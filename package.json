@@ -3,7 +3,7 @@
   "description" : "mock HTTP server specified by a DSL",
   "homepage" : "git@github.com:tildedave/httpmock.js.git",
   "version" : "0.0.1",
-  "scripts" : { "start" : "node httpmock.js" } },
+  "scripts" : { "start" : "node httpmock.js" },
   "dependencies" :
   {
     "optimist" : "latest"
