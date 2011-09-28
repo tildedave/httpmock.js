@@ -1,6 +1,6 @@
 var argv = require('optimist')
   .usage("Usage: $0 --config [config] --port [port]")
-  .default('config', 'mock.js')
+  .demand(['config'])
   .default('port', 5000)
   .argv;
 
