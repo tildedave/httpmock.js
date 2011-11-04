@@ -58,7 +58,6 @@ describe("Mock", function () {
 
     expect(routes[0].name).toBe('route 1');
     expect(routes[0].routeRequest.request.uri).toBe('/url1');
-    console.log(routes[0]);
     expect(routes[0].routeResponse.response.text).toBe('url1contents');
   });
 });
