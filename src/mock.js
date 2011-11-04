@@ -3,9 +3,9 @@ var http = require('http');
 
 var getRoutesFromConfig = function (data, modules) {
 
-  var request_module = modules.request_module;
-  var response_module = modules.response_module;
-  var route_module = modules.route_module;
+  var request_module = modules.request;
+  var response_module = modules.response;
+  var route_module = modules.route;
 
   var __routes;
   (function () {
@@ -22,6 +22,7 @@ var getRoutesFromConfig = function (data, modules) {
     var status = response_module.status;
     var time = response_module.time;
     var otherwise = response_module.otherwise;      
+
     var route = route_module.route;
     var routes = route_module.routes;
 
@@ -41,9 +42,9 @@ var startServerFromConfig = function (options) {
     console.log("------------------------------------------------");
 
     var routes = getRoutesFromConfig(data, {
-      request_module : require('./request.js'),
-      response_module : require('./response.js'),
-      route_module : require('./route.js')
+      request : require('./request.js'),
+      response : require('./response.js'),
+      route : require('./route.js')
     });
     
     console.log("Starting server on port " + port);
@@ -61,5 +62,7 @@ var mock = function (options) {
 };
 
 module.exports = {
-  mock : mock
+  mock : mock,
+  getRoutesFromConfig : getRoutesFromConfig,
+  startServerFromConfig : startServerFromConfig
 };
