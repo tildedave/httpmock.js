@@ -1,11 +1,19 @@
 var route = function (desc, request, response) {
+  var handledRequests = [];
+  
   return {
     matches : function (req) {
       return request.matches(req);
     },
     
     handle : function (req, resp) {
+      handledRequests.push(req);
       response.handle(req, resp);
+    },
+
+    handleVerify : function (req, resp) {
+      resp.writeHead(200);
+      resp.end(handledRequests);
     }
   };
 };

@@ -73,6 +73,21 @@ describe("Route", function () {
     expect(mockResponse.handle).toHaveBeenCalledWith(testRequest, testResponse);
   });
 
+
+  it("performs verification after handling", function () {
+    var mockResponse = getMockResponse();
+    var mockRequest = getMockRequest();
+
+    var verifyResponse = getTestResponse();
+    
+    var testRoute = route("Test route", mockRequest, mockResponse);
+    testRoute.handle({ url : '/some/url' }, {});
+    testRoute.handleVerify({}, verifyResponse);
+
+    expect(verifyResponse.writeHead).toHaveBeenCalledWith(200);
+    expect(verifyResponse.end).toHaveBeenCalledWith([{ url : '/some/url' }]);
+  });
+
   it("handles one route", function  () {
     var successfulRequest = getSuccessfulMockRequest();
     var mockResponse = getMockResponse();
