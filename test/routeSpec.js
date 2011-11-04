@@ -47,6 +47,18 @@ describe("Route", function () {
 
     return testResponse;
   };
+
+  var getMockRoute = function () {
+    var mockRoute = {
+      matches : function () { },
+      handleVerify : function () { }
+    };
+    
+    spyOn(mockRoute, "matches").andReturn(true);
+    spyOn(mockRoute, "handleVerify");
+
+    return mockRoute;
+  };
   
   it("determines if a request matches a route", function () {
     var mockResponse = getMockResponse();
@@ -134,6 +146,30 @@ describe("Route", function () {
     var testResponse = getTestResponse();
     
     testRoutes.process(testRequest, testResponse);
+
+    expect(testResponse.writeHead).toHaveBeenCalledWith(404);
+    expect(testResponse.end).toHaveBeenCalled();
+  });
+
+  it("processes a verify", function () {
+    var mockRoute = getMockRoute();
+    
+    var testRoutes = routes(mockRoute);
+    testRoutes.processVerify({}, {});
+    expect(mockRoute.handleVerify).toHaveBeenCalled();
+  });
+
+  it("404s when there is no matching route for a verify", function () {
+    var mockRoute = {
+      matches : function () { },
+      handleVerify : function () { }
+    };
+
+    spyOn(mockRoute, "matches").andReturn(false);
+
+    var testResponse = getTestResponse();
+    
+    routes(mockRoute).processVerify({}, testResponse);
 
     expect(testResponse.writeHead).toHaveBeenCalledWith(404);
     expect(testResponse.end).toHaveBeenCalled();

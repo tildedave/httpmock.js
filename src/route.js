@@ -20,18 +20,23 @@ var route = function (desc, request, response) {
 
 var routes = function (args) {
   var argArray = Array.prototype.slice.call(arguments);
-  return {
-    process: function (req, res) {
+  var doOnMatch = function (func) {
+    return function (req, res) {
       for(var i = 0, l = argArray.length; i < l; ++i) {
-        if (argArray[i].matches(req)) {
-          argArray[i].handle(req, res);
+        var route = argArray[i];
+        if (route.matches(req)) {
+          route[func](req, res);
           return;
         }
       }
-
+      
       res.writeHead(404);
       res.end();
-    }
+    };
+  };
+  return {
+    process: doOnMatch("handle"),
+    processVerify : doOnMatch("handleVerify")
   };
 };
 
