@@ -6,5 +6,10 @@ var argv = require('optimist')
 
 var mock = require('./src/mock.js').mock;
 
-mock(argv.port, argv.config);
+var options = {
+  port : argv.port,
+  file : argv.config
+}
+
+mock(options);
 
