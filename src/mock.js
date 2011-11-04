@@ -34,7 +34,6 @@ var getRoutesFromConfig = function (data, modules) {
 
 var startServerFromConfig = function (options) {
   var port = options.port;
-  
   return function (err, data) {
     console.log("Starting server with configuration:");
     console.log("------------------------------------------------");
@@ -49,9 +48,18 @@ var startServerFromConfig = function (options) {
     
     console.log("Starting server on port " + port);
     
+    var verifyHeader = options.verify.toLowerCase();
     http.createServer(function (req, res) {
-      console.log(new Date() + " -- " + req.method + " " + req.url);
-      routes.process(req, res);
+      if (req.headers[verifyHeader] !== undefined) {
+        console.log(new Date() + " -- " + req.method + " " + req.url +
+                    " (verify)");
+        routes.processVerify(req, res);
+      }
+      else {
+        console.log(new Date() + " -- " + req.method + " " + req.url);
+        routes.process(req, res);
+      }
+      
     }).listen(port, "0.0.0.0");
   };
 };

@@ -7,13 +7,17 @@ var route = function (desc, request, response) {
     },
     
     handle : function (req, resp) {
-      handledRequests.push(req);
+      handledRequests.push({
+        date : new Date(),
+        url : req.url,
+        method : req.method
+      });
       response.handle(req, resp);
     },
 
     handleVerify : function (req, resp) {
       resp.writeHead(200);
-      resp.end(handledRequests);
+      resp.end(JSON.stringify(handledRequests));
     }
   };
 };
